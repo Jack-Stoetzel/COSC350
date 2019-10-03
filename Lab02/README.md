@@ -61,7 +61,11 @@ Write a bash script that searches a word in a file as follows:
     * Otherwise, "word" NOT FOUND is printed
 4. Exit codes are:
     0   Success
+    
     1   No such directory
+    
     2   No such file (after three attempts)
+    
     3   File is not readable
+    
     4   Word not found in the file
