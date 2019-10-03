@@ -12,6 +12,7 @@ a.
     55555
 
 b.
+   
     *
     **
     ***
@@ -21,6 +22,7 @@ b.
     ***
     **
     *
+    
 
 c. Your program asks a number between 5 to 9. If an input is not
    between 5 and 9, display error message and ask again
@@ -60,6 +62,7 @@ Write a bash script that searches a word in a file as follows:
     * If word is in the file, "word" FOUND! is printed
     * Otherwise, "word" NOT FOUND is printed
 4. Exit codes are:
+
     0   Success
     
     1   No such directory
