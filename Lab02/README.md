@@ -44,7 +44,7 @@ Write a script named task7.sh to calculating factorial of given number by using 
 ## Task #8:
 Write a script named "task8.sh" to print given numbers sum of of all digit. The shell accepts one integer argument as a parameter. Your program must check number of arguments is one. If number of argument is not one, your program must display error message and exit.
 
-Ex.
+Ex.)
     
     [separk@sejong] ./sumdigit.sh 345
     Sum of digit for number is 12
