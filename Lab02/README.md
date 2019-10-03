@@ -42,16 +42,23 @@ Write a script named task7.sh to calculating factorial of given number by using 
 ## Task #8:
 Write a script named "task8.sh" to print given numbers sum of of all digit. The shell accepts one integer argument as a parameter. Your program must check number of arguments is one. If number of argument is not one, your program must display error message and exit.
 
+Ex.
+    
+    [separk@sejong] ./sumdigit.sh 345
+    Sum of digit for number is 12
+    
+    [separk@sejong] ./sumdigit.sh
+    You need to pass one numerical argument
+
 ## Task #9:
 Write a bash script that searches a word in a file as follows:
-1. Ask user for a directory in which to find a file
-    - If not valid, quit with error message
-2. Ask user for a file in that directory
-    - Give the user three attempts to name one
-    - If no readable file is named, quit with error message
+1. Ask user for a directory in which to find the file
+    * If not a valid directory, quit with an appropriate error message
+2. Ask user for the name of a readable file in that directory, giving the user three attempts to name one
+    * If no readable file is named, quit with an appropriate error message
 3. Ask user for a word to find in the file
-    - If word is in the file, <word> FOUND! is printed
-    - Otherwise, <word> NOT FOUND is printed
+    * If word is in the file, "word" FOUND! is printed
+    * Otherwise, "word" NOT FOUND is printed
 4. Exit codes are:
     0   Success
     1   No such directory
