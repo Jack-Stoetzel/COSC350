@@ -64,7 +64,7 @@ By using bash command mv, you can move a file from current directory to another 
 
 If the second argument is a directory, move a file to the directory. If the second argument is not a directory, move file to a directory as a file name.
 
-Ex)
+Ex.)
 
   * Move a file foo to under directory **~/separk/cosc350**
       
