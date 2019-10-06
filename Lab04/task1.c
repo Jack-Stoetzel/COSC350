@@ -18,12 +18,48 @@ int isdigit(int c)
         return 0;
 }
 
+int myatoi(char *str)
+{
+	int num = 0;
+	int index = 0;
+
+	while(str[index] != '\0')
+	{
+		num = (num * 10) + (str[index] - 48);
+		index++;
+	}
+	return num;
+}
+
 int main(int argc, char *argv[])
 {
-    int num = 56;
-    char word[2];
-    num = convIntToStr(word, num);
-    printf("%d \n", num);
-    printf("%s \n", word);
-    exit(0);
+    if (argc != 2)
+    {
+        puts("Argument number error.");
+        return 1;
+    }
+
+    int infile;
+    infile = open(argv[1], O_RDONLY);
+    if(infile < 0)
+    {
+        puts("Input file error.");
+        return 1;
+    }
+
+    char str[80];
+    char buf;
+    int i = 0;
+    while(read(infile, &buf, 1) == 1)
+        if(isdigit(buf))
+        {
+            str[i] = buf;
+            i++;
+        }
+    int num = myatoi(str);
+    num += 10;
+    int strSize = convIntToStr(str, num);
+    write(1, str, strSize);
+
+    return 0;
 }
