@@ -1,7 +1,14 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
+//#include <ctype.h>
+#include <stdio.h>
+#include <string.h>
+
+int convIntToStr(char * str, int x)
+{
+    sprintf(str, "%d", x);
+    return (strlen(str));
+}
 
 int isdigit(int c)
 {
@@ -13,6 +20,10 @@ int isdigit(int c)
 
 int main(int argc, char *argv[])
 {
-    
+    int num = 56;
+    char word[2];
+    num = convIntToStr(word, num);
+    printf("%d \n", num);
+    printf("%s \n", word);
     exit(0);
 }
