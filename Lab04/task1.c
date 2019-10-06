@@ -56,10 +56,11 @@ int main(int argc, char *argv[])
             str[i] = buf;
             i++;
         }
+        
     int num = myatoi(str);
     num += 10;
-    int strSize = convIntToStr(str, num);
-    write(1, str, strSize);
+    convIntToStr(str, num);
+    write(1, str, i);
 
     return 0;
 }
