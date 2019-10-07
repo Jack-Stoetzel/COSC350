@@ -1,3 +1,9 @@
+/*
+Jack Stoetzel
+Lab 04
+task1.c
+*/
+
 #include <unistd.h>
 #include <fcntl.h>
 //#include <ctype.h>
