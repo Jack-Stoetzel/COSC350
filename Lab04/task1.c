@@ -52,7 +52,8 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    // Opens an input file and checks for any errors
+    // Opens an input file from command line argument,
+    // and checks for any errors
     int infile;
     infile = open(argv[1], O_RDONLY);
     if(infile < 0)
