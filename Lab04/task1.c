@@ -47,8 +47,7 @@ int main(int argc, char *argv[])
         return 1;
     }
 
-    char str[80];
-    char buf;
+    char str[80], buf;
     int i = 0;
     while(read(infile, &buf, 1) == 1)
         if(isdigit(buf))
@@ -56,7 +55,7 @@ int main(int argc, char *argv[])
             str[i] = buf;
             i++;
         }
-        
+
     int num = myatoi(str);
     num += 10;
     convIntToStr(str, num);
