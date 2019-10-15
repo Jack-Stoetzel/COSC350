@@ -2,6 +2,17 @@
 Jack Stoetzel
 Lab 05
 task2.c
+
+struct utmp
+{
+    short ut_type;              // Type of login
+    pid_t ut_pid;               // PID of login process
+    char ut)line[12];           // Device name of tty - "/dev/"
+    char ut_id[4];              // Init id or abbrev. ttyname
+    char ut_user[32];           // User name
+    char ut_host[256];          // Hostname for remote login
+    struct exit_status ut_exit; // The exit status of a process
+}
 */
 
 #include <stdlib.h>
@@ -14,6 +25,7 @@ task2.c
 int openUtmpFile()
 {
     int ufd;
+    // utmp file is always in the same location
     ufd = open("/var/run/utmp", O_RDONLY);
     if(ufd < 0)
     {
@@ -26,12 +38,28 @@ int openUtmpFile()
 int main(int argc, char* argv[])
 {
     umask(0);
+    // setutent - Sets the file cursor to begining of utmp file
+    //            Should be done before all other functions
     setutent();
+
+    struct utmp *buf;
+    int count;
     int ufd = openUtmpFile();
 
-    struct utmp *buf = getutent();
+    buf = getutent();
+    while(buf != NULL)
+    {
+        printf("%s \n", buf->ut_user);
 
-    printf("%s \n", buf->ut_user);
+        if(buf -> ut_type == USER_PROCESS)
+        {
+            count ++;
+        }
+        buf = getutent();
+
+    }
+
+    printf("The number of user processes is %d. \n", count);
 
     close(ufd);
     return 0;
