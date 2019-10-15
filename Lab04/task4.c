@@ -1,7 +1,7 @@
 /*
 Jack Stoetzel
 Lab 04
-task3.c
+task4.c
 */
 
 #include <stdlib.h>
