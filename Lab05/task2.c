@@ -9,7 +9,7 @@ task2.c
 #include <unistd.h>
 #include <sys/stat.h>
 #include <fcntl.h>
-#include <string.h>
+#include <utmp.h>
 
 int openUtmpFile()
 {
@@ -23,14 +23,15 @@ int openUtmpFile()
     return ufd;
 }
 
-int main(int argc, char **argv)
+int main(int argc, char* argv[])
 {
+    umask(0);
+    setutent();
     int ufd = openUtmpFile();
 
-    char buf;
-    while(read(ufd, &buf, 1) > 0){
-        printf("%c", &buf);
-    }
+    struct utmp *buf = getutent();
+
+    printf("%s \n", buf->ut_user);
 
     close(ufd);
     return 0;
