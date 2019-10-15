@@ -1,17 +1,20 @@
 /*
 Jack Stoetzel
 Lab 05
-task2.c
+task3.c
 
-struct utmp
+Tue Oct 15 12:00:00 2019
+stuct tm
 {
-    short ut_type;              // Type of login
-    pid_t ut_pid;               // PID of login process
-    char ut)line[12];           // Device name of tty - "/dev/"
-    char ut_id[4];              // Init id or abbrev. ttyname
-    char ut_user[32];           // User name
-    char ut_host[256];          // Hostname for remote login
-    struct exit_status ut_exit; // The exit status of a process
+    int tm_sec;     seconds after the minute	0-60*
+    int tm_min;  	minutes after the hour	0-59
+    int tm_hour;    hours since midnight	0-23
+    int tm_mday;    day of the month	1-31
+    int tm_mon;     months since January	0-11
+    int tm_year;    years since 1900
+    int tm_wday;    days since Sunday	0-6
+    int tm_yday;    days since January 1	0-365
+    int tm_isdst;   Daylight Saving Time flag
 }
 */
 
@@ -21,68 +24,31 @@ struct utmp
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <utmp.h>
+#include <time.h>
 
 char* myasctime(const struct tm *timeptr)
 {
-    char* wDay;
-    switch(timeptr->tm_wday)
-    {
-        case 0:
-            month = malloc(6 * sizeof(char));
-            mon = "January";
-            break;
-        case 1:
-            month = malloc(6 * sizeof(char));
-            mon = "February";
-            break;
-        case 2:
-            month = malloc(7 * sizeof(char));
-            mon = "March";
-            break;
-        case 3:
-            month = malloc(9 * sizeof(char));
-            mon = "April";
-            break;
-        case 4:
-            month = malloc(8 * sizeof(char));
-            mon = "May";
-            break;
-        case 5:
-            month = malloc(6 * sizeof(char));
-            mon = "June";
-            break;
-        case 6:
-            month = malloc(8 * sizeof(char));
-            mon = "July";
-            break;
-        case 7:
-            month = malloc(6 * sizeof(char));
-            mon = "August";
-            break;
-        case 8:
-            month = malloc(6 * sizeof(char));
-            mon = "September";
-            break;
-        case 9:
-            month = malloc(7 * sizeof(char));
-            mon = "October";
-            break;
-        case 10:
-            month = malloc(9 * sizeof(char));
-            mon = "November";
-            break;
-        case 11:
-            month = malloc(8 * sizeof(char));
-            mon = "December";
-            break;
+    char wDay[][4] =
+    {"Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"};
+    char month[][4] =
+    {"Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
 
-    }
+    static char time[26];
+    sprintf(time, "%s %s %2d %.2d:%.2d:%.2d %d",
+    wDay[timeptr->tm_wday], month[timeptr -> tm_mon],
+    timeptr -> tm_mday, timeptr -> tm_hour, timeptr -> tm_min,
+    timeptr -> tm_sec, timeptr -> tm_year + 1900);
 
-    free(month);
+    return time;
 }
 
 int main(int argc, char* argv[])
 {
-
+    time_t raw;
+    time(&raw);
+    struct tm *time;
+    time = localtime(&raw);
+    printf("The time is %s \n", myasctime(time));
     return 0;
 }
