@@ -13,23 +13,25 @@ task3.c
 
 int main(int argc, char* argv[])
 {
+
     umask(0);
-    struct stat sb;
-    stat(argv[2], &sb);
-    int size = strlen(argv[2]);
-    if(S_ISDIR(sb.st_mode))
-    {
-        printf("%s Exists as a directory, moving file inside of directory\n", argv[2]);
-        sprintf(argv[2]+size, "/%s", argv[1]);
-        link(argv[1], argv[2]);
+    struct stat dir;
+    stat(argv[2], &dir);
+    if(S_ISDIR(dir.st_mode)){
+        char path[strlen(argv[2]) + strlen(argv[1])];
+        sprintf(path, "%s", argv[2]);
+        sprintf(path, "%s/%s", path, argv[1]);
+        link(argv[1], path);
         unlink(argv[1]);
     }
-    else
-    {
-        printf("%s Does not exist as a directory, creating directory and moving file\n", argv[2]);
-        mkdir(argv[2], 0700);
-        sprintf(argv[2]+size, "/%s", argv[1]);
-        link(argv[1], argv[2]);
+    else{
+        char path[strlen(argv[2]) + strlen(argv[1])];
+        sprintf(path, "%s", argv[2]);
+        printf("%s \n", path);
+        sprintf(path, "%s/%s", path, argv[1]);
+        printf("%s \n", path);
+        mkdir(argv[2], 0777);
+        link(argv[1], path);
         unlink(argv[1]);
     }
 }
