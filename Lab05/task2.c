@@ -37,10 +37,10 @@ int openUtmpFile()
 
 int main(int argc, char* argv[])
 {
-    umask(0);
     // setutent - Sets the file cursor to begining of utmp file
     //            Should be done before all other functions
     setutent();
+    umask(0);
 
     struct utmp *buf;
     int count = 0;
