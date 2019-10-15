@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
     struct utmp *buf;
     int count = 0;
     int ufd = openUtmpFile();
-    printf("The file descriptor of the utmp file is %d.\n", ufd);
+    printf("The utmp file descriptor is %d.\n", ufd);
 
     // getutent - Reads a line from the current utmp file
     buf = getutent();
