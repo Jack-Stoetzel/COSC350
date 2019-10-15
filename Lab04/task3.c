@@ -16,16 +16,44 @@ task3.c
 
 int main(int argc, char *argv[])
 {
-    char home[] = "/Users/jstoetzel/";
-
+    char home[] = "/mnt/linuxlab/home/jstoetzel1/";
+    char location[256];
     chdir(home);
-    char dir1[] = "./Dir1/";
-    int test = mkdir(dir1, 0755);
-    printf("%d \n", test);
-    char dir2[] = "/Users/jstoetzel/Dir2/";
-    mkdir(dir2, 0755);
-    chdir(dir2);
-    char dir21[] = "/Users/jstoetzel/Dir2/Dir21/";
-    mkdir(dir21, 0755);
+
+    sprintf(location, "%s/Dir1", home);
+    mkdir(location, 0755);
+
+    sprintf(location, "%s/Dir2", home);
+    mkdir(location, 0755);
+
+    sprintf(location, "%s/Dir21", location);
+    mkdir(location, 0755);
+
+    sprintf(location, "%s/hello", location);
+
+    char buf;
+    int fd1, fd2;
+
+    fd1 = open("hello", O_RDONLY);
+    fd2 = open(location, O_CREAT | O_WRONLY, 0775);
+    while(read(fd1, &buf, 1) > 0)
+    {
+        write(fd2, &buf, 0);
+    }
+
+    char linkLocation[256];
+
+    sprintf(location, "%s/Dir1/toDir21", home);
+    sprintf(linkLocation, "%s/Dir2/Dir21", home);
+
+    symlink(location, linkLocation);
+
+    sprintf(location, "%s/Dir1/toHello", home);
+    sprintf(linkLocation, "%s/Dir2/Dir21/hello", home);
+
+    symlink(location, linkLocation);
+
+    close(fd1);
+    close(fd2);
     return 0;
 }
