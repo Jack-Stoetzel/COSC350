@@ -43,9 +43,10 @@ int main(int argc, char* argv[])
     setutent();
 
     struct utmp *buf;
-    int count;
+    int count = 0;
     int ufd = openUtmpFile();
 
+    // getutent - Reads a line from the current utmp file
     buf = getutent();
     while(buf != NULL)
     {
@@ -61,6 +62,8 @@ int main(int argc, char* argv[])
 
     printf("The number of user processes is %d. \n", count);
 
+    // endutent - closes the utmp file
+    endutent();
     close(ufd);
     return 0;
 }
