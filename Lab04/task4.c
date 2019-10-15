@@ -11,7 +11,7 @@ task3.c
 #include <fcntl.h>
 #include <string.h>
 
-int main(int argc, char **argv)
+int main(int argc, char* argv[])
 {
     umask(0);
     struct stat sb;
