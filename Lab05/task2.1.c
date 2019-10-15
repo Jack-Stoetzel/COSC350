@@ -1,7 +1,7 @@
 /*
 Jack Stoetzel
-Lab 04
-task3.c
+Lab 05
+task2.c
 */
 
 #include <stdlib.h>
@@ -26,6 +26,12 @@ int openUtmpFile()
 int main(int argc, char **argv)
 {
     int ufd = openUtmpFile();
-    printf("The utmp file descriptor is %d. \n", ufd);
+
+    char buf;
+    while(read(ufd, &buf, 1) > 0){
+        printf("%c", &buf);
+    }
+
+    close(ufd);
     return 0;
 }
