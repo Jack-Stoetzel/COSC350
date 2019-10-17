@@ -52,7 +52,7 @@ Write a C program for sequence of following tasks:
   3. By using system calls, make a symbolic link named toDir12 to directory toDir12
   4. By using system calls, make a symbolic link named toHello to executable file ~/Dir12/hello
   
-  (INSERT PICTURE HERE)
+  ![Pic 2](./task31-wo-hello.jpg)
    
 ## Task #3.2
 
