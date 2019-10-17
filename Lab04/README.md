@@ -46,7 +46,7 @@ Write a simple program called hello.c and compile it and create executable file 
 Write a C program for sequence of following tasks:
   1. By using system calls, build the following directory structure
   
-  (INSERT PICTURE HERE)
+  ![Pic 1](./task31-w-hello.png)
   
   2. By using system calls, copy hello file under ~/Dir2/Dir12/
   3. By using system calls, make a symbolic link named toDir12 to directory toDir12
