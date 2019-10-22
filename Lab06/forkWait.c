@@ -51,6 +51,7 @@ int main(int argc, char* argv[])
             n = Np;
             t = Tp;
             exit_code = 0;
+            wait(&pid);
             break;
     }
 
