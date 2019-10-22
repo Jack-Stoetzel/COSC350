@@ -1,6 +1,7 @@
 /*
 Jack Stoetzel
 Lab 06
+Task 4
 child.c
 
 */

@@ -3,7 +3,7 @@ Jack Stoetzel
 Lab 06
 Task 1
 task1.c
-DONE
+
 */
 #include <stdio.h>
 #include <stdlib.h>

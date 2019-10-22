@@ -1,7 +1,8 @@
 /*
 Jack Stoetzel
 Lab 06
-task2.c
+Task 2
+fork1.c
 
 */
 #include <sys/types.h>

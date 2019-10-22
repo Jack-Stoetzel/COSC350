@@ -1,7 +1,8 @@
 /*
 Jack Stoetzel
 Lab 06
-task3.c
+Task 4
+forkExec.c
 
 */
 #include <sys/types.h>
@@ -43,6 +44,7 @@ int main(int argc, char* argv[])
 			 execlp("./child", argv[1], argv[3], "Mommy says hi.", (char *)0);
 			break;
 		default:
+			//wait(&pid);
 			for(; Np > 0; Np--)
 			{
 				printf("Parent ID = %d. \n", getpid());

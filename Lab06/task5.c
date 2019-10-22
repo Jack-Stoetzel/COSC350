@@ -1,6 +1,7 @@
 /*
 Jack Stoetzel
 Lab 06
+Task 5
 task5.c
 
 */
@@ -21,48 +22,75 @@ int isdigit(int c)
 int main(int argc, char* argv[])
 {
     pid_t pid;
-    int childOff, parentOff;
-    int infile, childOut, parentOut;
+    int infile, childOut, parentOut, exit_code;
     char buf;
 
     infile = open(argv[1], O_RDONLY);
     parentOut = open("parent.txt", O_WRONLY|O_CREAT|O_EXCL, 0755);
     childOut = open("child.txt", O_WRONLY|O_CREAT|O_EXCL, 0755);
 
-    int size = lseek(infile, -1, SEEK_END);
-    lseek(infile, 0, SEEK_CUR);
+    lseek(infile, 0, SEEK_SET);
+
+    int childOff = lseek(infile, 0, SEEK_SET);
+    int parentOff = lseek(infile, 0, SEEK_SET);
 
     pid = fork();
-    while(childOff <= size && parentOff <= size)
-    {
+
         switch(pid)
         {
             case -1:
                 perror("Fork failed.");
                 exit(1);
             case 0:
-                lseek(infile, childOff, SEEK_SET);
-                read(infile, &buf, 1);
-                if(isdigit(buf) == 1)
+                exit_code = 37;
+                //lseek(infile, childOff, SEEK_SET);
+                while(pread(infile, &buf, 1, childOff) == 1)
                 {
+                if(isdigit(buf) == 0)
+                {
+                    //printf("%c is a letter \n", buf);
                     write(childOut, &buf, 1);
                 }
                 childOff++;
+                //lseek(infile, childOff, SEEK_SET);
+            }
                 break;
             default:
-                lseek(infile, parentOff, SEEK_SET);
-                read(infile, &buf, 1);
+                exit_code = 0;
+                //lseek(infile, parentOff, SEEK_SET);
+                while(pread(infile, &buf, 1, parentOff) == 1)
+                {
                 if(isdigit(buf) == 1)
                 {
+                    //printf("%c is a number \n", buf);
                     write(parentOut, &buf, 1);
                 }
                 parentOff++;
+                //lseek(infile, parentOff, SEEK_SET);
+            }
                 break;
         }
-    }
+
     close(infile);
     close(childOut);
     close(parentOut);
 
-    return 0;
+    if(pid != 0)
+    {
+        int stat_val;
+        pid_t child_pid;
+
+        child_pid = wait(&stat_val);
+
+        printf("Child  has finished: PID = %d. \n", child_pid);
+        if(WIFEXITED(stat_val))
+        {
+            printf("Child exited with code %d. \n", WEXITSTATUS(stat_val));
+        }
+        else
+        {
+            printf("Child terminated abnormally. \n");
+        }
+    }
+    exit(exit_code);
 }

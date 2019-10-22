@@ -1,7 +1,8 @@
 /*
 Jack Stoetzel
 Lab 06
-task3.c
+Task 3
+forkWait.c
 
 */
 #include <sys/types.h>
