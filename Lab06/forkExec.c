@@ -24,53 +24,50 @@ int myatoi(char *str)
 
 int main(int argc, char* argv[])
 {
-    int Nc = myatoi(argv[1]);
-    int Np = myatoi(argv[2]);
-    int Tc = myatoi(argv[3]);
-    int Tp = myatoi(argv[4]);
+	int Nc = myatoi(argv[1]);
+	int Np = myatoi(argv[2]);
+	int Tc = myatoi(argv[3]);
+	int Tp = myatoi(argv[4]);
 
-    pid_t pid;
-    char* message;
-    int n, t, exit_code;
+	pid_t pid;
+	int n, t, exit_code;
 
-    printf("Fork program starting.\n");
-    pid = fork();
-    switch(pid)
-    {
-        case -1:
-            perror("Fork failed.");
-            exit(1);
-        case 0:
-            exit_code = excel("./child", Nc, Tc, (char *)0);
-        default:
-            message = "This is the parent.";
-            n = Np;
-            t = Tp;
-            exit_code = 0;
-            break;
-    }
+	printf("Fork program starting.\n");
+	pid = fork();
+	switch(pid)
+	{
+		case -1:
+			perror("Fork failed.");
+			exit(1);
+		case 0:
+			exit_code = execl("./child", Nc, Tc, "Mommy says hi.", (char *)0);
+			break;
+		default:
+			for(; Np > 0; Np--)
+			{
+				printf("Parent ID = %d. \n", pid);
+				sleep(Tp);
+			}
+			break;
+	}
 
-    for(; n > 0; n--)
-    {
-        puts(message);
-        sleep(t);
-    }
-    if(pid != 0)
-    {
-        int stat_val;
-        pid_t child_pid;
 
-        child_pid = wait(&stat_val);
+	if(pid != 0)
+	{
+		int stat_val;
+		pid_t child_pid;
 
-        printf("Child  has finished: PID = %d. \n", child_pid);
-        if(WIFEXITED(stat_val))
-        {
-            printf("Child exited with code %d. \n", WEXITSTATUS(stat_val));
-        }
-        else
-        {
-            printf("Child terminated abnormally. \n");
-        }
-    }
-    exit(exit_code);
+		child_pid = wait(&stat_val);
+
+		printf("Child  has finished: PID = %d. \n", child_pid);
+		if(WIFEXITED(stat_val))
+		{
+			printf("Child exited with code %d. \n", WEXITSTATUS(stat_val));
+		}
+		else
+		{
+			printf("Child terminated abnormally. \n");
+		}
+	}
+	exit(exit_code);
 }
