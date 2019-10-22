@@ -40,17 +40,16 @@ int main(int argc, char* argv[])
 			perror("Fork failed.");
 			exit(1);
 		case 0:
-			exit_code = execl("./child", Nc, Tc, "Mommy says hi.", (char *)0);
+			 execlp("./child", argv[1], argv[3], "Mommy says hi.", (char *)0);
 			break;
 		default:
 			for(; Np > 0; Np--)
 			{
-				printf("Parent ID = %d. \n", pid);
+				printf("Parent ID = %d. \n", getpid());
 				sleep(Tp);
 			}
 			break;
 	}
-
 
 	if(pid != 0)
 	{

@@ -24,12 +24,12 @@ int myatoi(char *str)
 
 int main(int argc, char* argv[])
 {
-	int Nc = myatoi(argv[1]);
-	int Tc = myatoi(argv[2]);
+	int Nc = myatoi(argv[0]);
+	int Tc = myatoi(argv[1]);
 
 	for(; Nc > 0; Nc--)
     {
-        puts("This is the child");
+        printf("Child PID = %d \t %s \n", getpid(), argv[2]);
         sleep(Tc);
     }
 	exit(37);
