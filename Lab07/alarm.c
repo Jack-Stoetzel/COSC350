@@ -17,7 +17,7 @@ static int alarm_fired = 0;
 void ding(int sig)
 {
     alarm_fired = 1;
-    printf("\a \n");
+    puts("\a");
 }
 
 int main(int argc, char* argv[])
