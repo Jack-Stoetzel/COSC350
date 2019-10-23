@@ -31,8 +31,8 @@ int main(int argc, char* argv[])
 
     lseek(infile, 0, SEEK_SET);
 
-    int childOff = lseek(infile, 0, SEEK_SET);
-    int parentOff = lseek(infile, 0, SEEK_SET);
+    int childOff = 0;
+    int parentOff = 0;
 
     pid = fork();
 
@@ -43,30 +43,24 @@ int main(int argc, char* argv[])
                 exit(1);
             case 0:
                 exit_code = 37;
-                //lseek(infile, childOff, SEEK_SET);
                 while(pread(infile, &buf, 1, childOff) == 1)
                 {
                 if(isdigit(buf) == 0)
                 {
-                    //printf("%c is a letter \n", buf);
                     write(childOut, &buf, 1);
                 }
                 childOff++;
-                //lseek(infile, childOff, SEEK_SET);
             }
                 break;
             default:
                 exit_code = 0;
-                //lseek(infile, parentOff, SEEK_SET);
                 while(pread(infile, &buf, 1, parentOff) == 1)
                 {
                 if(isdigit(buf) == 1)
                 {
-                    //printf("%c is a number \n", buf);
                     write(parentOut, &buf, 1);
                 }
                 parentOff++;
-                //lseek(infile, parentOff, SEEK_SET);
             }
                 break;
         }
