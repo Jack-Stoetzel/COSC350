@@ -24,15 +24,22 @@ int main(int argc, char* argv[])
     pid_t pid;
     int infile, childOut, parentOut, exit_code;
     char buf;
-
-    infile = open(argv[1], O_RDONLY);
-    parentOut = open("parent.txt", O_WRONLY|O_CREAT|O_EXCL, 0755);
-    childOut = open("child.txt", O_WRONLY|O_CREAT|O_EXCL, 0755);
-
-    lseek(infile, 0, SEEK_SET);
-
     int childOff = 0;
     int parentOff = 0;
+
+    infile = open(argv[1], O_RDONLY);
+    if(infile < 0)
+    {
+        puts("Input file error.");
+		exit(1);
+    }
+    parentOut = open("parent.txt", O_WRONLY|O_CREAT|O_EXCL, 0755);
+    childOut = open("child.txt", O_WRONLY|O_CREAT|O_EXCL, 0755);
+    if(childOut < 0 || parentOut < 0)
+    {
+        puts("Output file error.");
+		exit(1);
+    }
 
     pid = fork();
 
