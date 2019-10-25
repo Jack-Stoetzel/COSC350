@@ -37,14 +37,15 @@ int main(int argc, char* argv[])
         }
         case 0:
         {
+            // Waits 5 seconds, then kills the child process with SIGALRM
             sleep(5);
-            kill(getppid(), SIGALRM);
+            kill(getppid(), SIGALRM);   // SIGALRM 14 Alarm Clock (POSIX)
             exit(0);
         }
     }
 
     puts("Waiting for alarm to go off... \n");
-    (void) signal(SIGALRM, ding);
+    (void) signal(SIGALRM, ding);   // Sends SIGALRM signal to the ding function
 
     pause();
 
