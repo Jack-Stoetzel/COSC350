@@ -35,7 +35,7 @@ int main(int argc, char* argv[])
 	}
 	else if(pid == 0)
 	{
-		// Child process writes "Hi, Mom." to the file, and then terminates.
+		// Child process writes "Hi, Mom." to the file 'foo', and then terminates.
 		
 		outfile = open("foo", O_WRONLY|O_CREAT|O_EXCL, 0755);
 		char hello[] = "Hi, Mom.";
@@ -47,9 +47,13 @@ int main(int argc, char* argv[])
 	}
 	else
 	{
+		// Parent process reads the file 'foo' and then writes it to the screen
+
 		wait(&pid);
+
 		infile = open("foo", O_RDONLY);
 		printf("My son said, ");
+
 		while(read(infile, &buf, 1) > 0)
 		{
 			printf("%c", buf);
