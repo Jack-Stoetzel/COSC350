@@ -17,16 +17,15 @@
 int main(int argc, char* argv[])
 {
 	pid_t pid;
-	int infile, outfile;
-	int i;
+	int i, infile, outfile;
 	char buf;
 
-	outfile = open("foo", O_WRONLY|O_CREAT|O_EXCL, 0755);
 	if(outfile < 0)
 	{
 		puts("Ouput file error");
 		exit(1);
 	}
+
 	pid = fork();
 
 	if(pid < 0)
@@ -36,8 +35,13 @@ int main(int argc, char* argv[])
 	}
 	else if(pid == 0)
 	{
+		// Child process writes "Hi, Mom." to the file, and then terminates.
+		
+		outfile = open("foo", O_WRONLY|O_CREAT|O_EXCL, 0755);
 		char hello[] = "Hi, Mom.";
-		for(i = 0; i < strlen(hello); i++){
+		
+		for(i = 0; i < strlen(hello); i++)
+		{
 			write(outfile, &hello[i], 1);
 		}
 	}
