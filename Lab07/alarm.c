@@ -1,10 +1,10 @@
 /*
-Jack Stoetzel
-Lab 07
-Task 1
-task1.c
-
-*/
+ * Jack Stoetzel
+ * Lab 07
+ * Task 1
+ * alarm.c
+ * 
+ */
 
 #include <sys/types.h>
 #include <signal.h>
