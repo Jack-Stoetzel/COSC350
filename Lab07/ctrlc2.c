@@ -10,8 +10,6 @@
         int sa_flags;               // signal actoin modifiers
     };
 
-
-
  */
 
 #include <signal.h>
@@ -22,21 +20,24 @@ void ouch(int sig)
 {
     printf("\t OUCH! - I got signal %d. \n", sig);
 
-    // Converts Ctrl+C and Ctrl+\ back to their default operations
+    // Converts Ctrl+C back to it's default operations
     signal(SIGINT, SIG_DFL);
-    //signal(SIGQUIT, SIG_DFL);
 }
 
 int main(int argc, char* argv[])
 {
     struct sigaction act;
 
-    act.sa_handler = ouch;  // When a signal is used with act, the ouch() function will be called
+    // When a signal is used with act, the ouch() function will be called
+    act.sa_handler = ouch;  
     sigemptyset(&act.sa_mask);
     act.sa_flags = 0;
 
-    sigaction(SIGINT, &act, NULL);      // Sets Ctrl+C to trigger the ouch() function
-    //sigaction(SIGQUIT, &act, NULL);   // Sets Ctrl+\ to trigger the ouch() function
+    // Sets Ctrl+C to trigger the ouch() function
+    sigaction(SIGINT, &act, NULL);      
+
+    // Sets Ctrl+\ to trigger the ouch() function
+    //sigaction(SIGQUIT, &act, NULL);   
 
     while(1)
     {
