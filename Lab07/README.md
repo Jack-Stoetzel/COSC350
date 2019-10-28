@@ -14,7 +14,7 @@ In this task you will modify alarm.c to use sigaction.
 
 1. Copy ctrlc1.c from the textbook. Run it to see how it behaves.
 2. Copy ctrlc2.c from the textbook. Run it to see how it behaves.
-3. The textbook advises using SIGQUIT(^\) to quit from ctrlc2.c. Try it to see how it behaves.
+3. The textbook advises using SIGQUIT(^\\) to quit from ctrlc2.c. Try it to see how it behaves.
 4. As an alternative way to quit from it, put it in the background, then issue a kill.
 5. Modify ctrlc.2 so it behaves exactly the same as ctrlc1.c.
 
