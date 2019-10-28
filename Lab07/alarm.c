@@ -5,14 +5,9 @@
  alarm.c
   
     struct sigaction {
-        union __sigaction_u __sigaction_u;  // signal handler 
-        sigset_t sa_mask;                   // signal mask to apply 
-        int sa_flags;                       // see signal options below 
-    };
-
-    union __sigaction_u {
-        void (*__sa_handler)(int);
-        void (*__sa_sigaction)(int, siginfo_t, void *);
+        void (*) (int) sa_hadler;   // function, SIG_DFL or SIG_IGN 
+        sigset_t sa_mask;           // signals to block in sa_handler 
+        int sa_flags;               // signal actoin modifiers
     };
 
  */
