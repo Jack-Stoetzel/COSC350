@@ -7,5 +7,9 @@ all:
 
 	gcc -o task3 task3.c
 
+	gcc -o task4 task4.c
+
+	gcc -o task5 task5.c
+
 clean:
-	rm alarm ctrlc1 ctrlc2 task3
+	rm alarm ctrlc1 ctrlc2 task3 task4 task5
