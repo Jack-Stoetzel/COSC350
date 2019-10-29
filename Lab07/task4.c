@@ -3,7 +3,7 @@
  * Lab 07
  * Task 4
  * task4.c
- * 
+ *
  */
 
 #include <sys/types.h>
@@ -23,8 +23,6 @@ void ProcessSignal(int sig){
 
 int main(int argc, char* argv[])
 {
-	signal(SIGUSR1, ProcessSignal);
-  	signal(SIGUSR2, ProcessSignal);
 
 	pid_t pid1, pid2;
 	pid1 = fork();
@@ -35,7 +33,7 @@ int main(int argc, char* argv[])
 	}
 	else if(pid1 == 0)
 	{
-		
+		signal(SIGUSR1, ProcessSignal);
 	}
 	else
 	{
@@ -47,7 +45,7 @@ int main(int argc, char* argv[])
 		}
 		else if(pid2 == 0)
 		{
-
+			signal(SIGUSR2, ProcessSignal);
 		}
 		else
 		{
