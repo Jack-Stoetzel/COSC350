@@ -45,7 +45,8 @@ int main(int argc, char* argv[])
 		sleep(1);
 	}
 
-	// Must process the signal in some way or the program will end if these command are used while blocked and then become unblocked
+	// Must process the signal in some way or the program will end if these command are used while blocked and then
+	//	become unblocked
 	signal(SIGQUIT, ProcessSignal);
 	signal(SIGINT, ProcessSignal);
 
