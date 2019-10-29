@@ -24,6 +24,7 @@ void ProcessSignal(int sig){
 int main(int argc, char* argv[])
 {
 
+
 	pid_t pid1, pid2;
 	pid1 = fork();
 	if(pid1 < 0)
@@ -33,7 +34,8 @@ int main(int argc, char* argv[])
 	}
 	else if(pid1 == 0)
 	{
-		signal(SIGUSR1, ProcessSignal);
+		kill(pid1, SIGUSR1);
+		pause();
 	}
 	else
 	{
@@ -45,12 +47,13 @@ int main(int argc, char* argv[])
 		}
 		else if(pid2 == 0)
 		{
-			signal(SIGUSR2, ProcessSignal);
+			kill(pid2, SIGUSR2);
+			pause();
 		}
 		else
 		{
-			kill(pid1, SIGUSR1);
-			kill(pid2, SIGUSR2);
+			signal(SIGUSR1, ProcessSignal);
+			signal(SIGUSR2, ProcessSignal);
 		}
 	}
 
