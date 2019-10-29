@@ -42,7 +42,7 @@ int main(int argc, char* argv[])
 		sleep(1);
 	}
 
-	//sigprocmask(SIG_SETMASK, &sigs, &old);
+	sigprocmask(SIG_SETMASK, &old, NULL);
 
 	sigemptyset(&sigs);
 
