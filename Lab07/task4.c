@@ -55,8 +55,6 @@ int main(int argc, char* argv[])
 			kill(pid2, SIGUSR2);
 		}
 	}
-	//wait();
-	//wait();
 
 	return 0;
 }
