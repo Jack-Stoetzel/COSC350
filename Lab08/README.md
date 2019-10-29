@@ -15,7 +15,7 @@ Three threads are sharing an integer array (you may define as global) and each t
 * Thread \#3: Get the minimum and the maximum score and display.
 * Thread \#4: Clear the buffer and set to 0 and display after Thread \#2 and Thread \#3 finish their jobs.
 
-* Thread \#2 and Thread \#3 must wait for Thread \#1 to finish it's job. Once Thread \#1 finishes it's job, 
+Thread \#2 and Thread \#3 must wait for Thread \#1 to finish it's job. Once Thread \#1 finishes it's job, 
 Thread \#2 and Thread \#3 work concurrently. Thread \#4 must wait for Thread \#2 and Thread \#3 to finish their jobs.
 
 ## Task 3: Inter-process Communication Using Pipe
