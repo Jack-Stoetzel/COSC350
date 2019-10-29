@@ -1,5 +1,3 @@
-
-
 # Lab 08
 
 ## Task 1: Concurrent Calculation
@@ -31,3 +29,10 @@ The child process continues until the input from the parent is EOF.
 popen() creates a child and a pipe. A parent process asks two arguments from the command line: a shell command and a
 file name, and then sends them to the child by using popen(). The child process will implement the command with the file
 as an input then sends it to the parent. The parent simply displays the output from the child on standard output.
+
+Ex.)
+
+    ./task4 cat task4.c
+    ./task4 sort task4.c
+    ./task4 cat task4.c | grep main
+ 
