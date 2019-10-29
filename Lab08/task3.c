@@ -2,7 +2,7 @@
  Jack Stoetzel
  Lab 08
  Task 3
- task1.c
+ task3.c
 
  */
 
