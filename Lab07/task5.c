@@ -18,11 +18,14 @@
 #include <stdio.h>
 #include <unistd.h>
 
+void ProcessSignal(int sig){
+	signal(SIGQUIT, SIG_DFL);
+}
 
 int main(int argc, char* argv[])
 {
 	int i;
-	sigset_t sigs, old;
+	sigset_t sigs;
 
 	// Clears the signal set
 	sigemptyset(&sigs);
@@ -33,8 +36,8 @@ int main(int argc, char* argv[])
 	// Adds SIGQUIT to the signal set 'sigs'
 	sigaddset(&sigs, SIGQUIT);
 
-	// Blocks the signal in the signal set 'sigs' and store the old signal mask in the set 'old'
-	sigprocmask(SIG_BLOCK, &sigs, &old);
+	// Blocks the signal in the signal set 'sigs'
+	sigprocmask(SIG_BLOCK, &sigs,  NULL);
 
 	//Loop 1: Block SIGINT and SIGQUIT
 	for(i = 1; i <= 5; i++){
@@ -42,13 +45,16 @@ int main(int argc, char* argv[])
 		sleep(1);
 	}
 
-	sigprocmask(SIG_SETMASK, &old, NULL);
+	// Must process the signal in some way or the program will end if these command are used while blocked and then become unblocked
+	signal(SIGQUIT, ProcessSignal);
+	signal(SIGINT, ProcessSignal);
+
+	// Unblocks signals in the signal set 'sigs'
+	sigprocmask(SIG_UNBLOCK, &sigs, NULL);
 
 	sigemptyset(&sigs);
-
 	sigaddset(&sigs, SIGINT);
-
-	sigprocmask(SIG_BLOCK, &sigs, &old);
+	sigprocmask(SIG_BLOCK, &sigs, NULL);
 
 	// Loop 2: Block SIGINT
 	for(i = 1; i <= 5; i++){
