@@ -1,38 +1,37 @@
 # Lab 06
 
-## Task 1: Concurrent Calculation
+## Task 1: getenv() Function
 
-Write a C program which accepts an integer argument and calculate sum (1 + 2 + 3 + ... + n) and factorial
-(1 x 2 x 3 x ... x n). Instead of calling sequence of two functions, two threads will be created and each thread works
-for different task concurrently.
+* Write your own getenv() function called mygetenv(), which has the same syntax and semantics.
+* Write a simple C program to show your mygetenv() function works well.
 
-## Task 2: Wait for a Thread for Concurrent Calculations
+## Task 2: Creating New Processes Using fork()
 
-Three threads are sharing an integer array (you may define as global) and each thread does different jobs.
+1. Copy fork1.c from the textbook.
+2. Compile and run it to be sure you understand what it does.
+3. Modify your fork1.c to take four command-line arguments:
+    1. Nc - The number of iterations for the child process
+    2. Np - The number of iterations for the parent process
+    3. Tc - The sleep time for the child process
+    4. Tp - The sleep time for the parent process   
+    Then, modify the code accordingly.
+4. Run the program as fork1 5 3 1 1. You should get the same results as running the original version.
+5. Run the program with the following values (and any other values you find interesting).
 
-* Thread \#1: Get test scores from the keyboard, up to 20, and saves them into the array.
-* Thread \#2: Calculate an average score and Medium value and display.
-* Thread \#3: Get the minimum and the maximum score and display.
-* Thread \#4: Clear the buffer and set to 0 and display after Thread \#2 and Thread \#3 finish their jobs.
+    5 3 1 5
+    5 3 5 1
 
-Thread \#2 and Thread \#3 must wait for Thread \#1 to finish it's job. Once Thread \#1 finishes it's job, 
-Thread \#2 and Thread \#3 work concurrently. Thread \#4 must wait for Thread \#2 and Thread \#3 to finish their jobs.
+## Task 3: Using wait()
 
-## Task 3: Inter-process Communication Using Pipe
+1. Copy your modified fork1.c to a file named forkWait.c.
+2. Modify forkWait.c so the parent process waits for the child to finish. Use code from the textbook for the wait portion.
+3. Run your forkWait.c with Nc = 5, Np = 3, Tc = 1, Tp = 1.
 
-A parent process asks two integers from the command line and sends to child using pipe. The child processes to make sure
-the two inputs are integers. The child process calculates the sum of the two integers and outputs on standard output.
-The child process continues until the input from the parent is EOF.
+## Task 4: Fork With exec()
 
-## Task 4: Inter-process Communication Using popen() and pclose()
+This task forks a child process and uses exec to replace its process image with another image. 
+Its very similar to Task 3, but the child process is implemented as a sperate program.
 
-popen() creates a child and a pipe. A parent process asks two arguments from the command line: a shell command and a
-file name, and then sends them to the child by using popen(). The child process will implement the command with the file
-as an input then sends it to the parent. The parent simply displays the output from the child on standard output.
-
-Ex.)
-
-    ./task4 cat task4.c
-    ./task4 sort task4.c
-    ./task4 cat task4.c | grep main
- 
+1. Copy forkWait.c from Task 3 to a file named forkExec.c.
+2. Modify forkExec.c so the child process image is replaced by the image of a program named child.c. 
+Use one of the exec family functions to do this.
