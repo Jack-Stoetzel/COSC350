@@ -72,7 +72,17 @@ int main(int argc, char* argv[])
 	int n = myatoi(argv[1]);
 
 	rc = pthread_create(&sumThread, NULL, findSum, (void*) n);
+	if(rc)
+	{
+		puts("Error ocurred when creating pthread.");
+		exit(-1);
+	}
 	rc = pthread_create(&prodThread, NULL, findProduct, (void*) n);
+		if(rc)
+	{
+		puts("Error ocurred when creating pthread.");
+		exit(-1);
+	}
 
 	void* sum;
 	void* prod;
