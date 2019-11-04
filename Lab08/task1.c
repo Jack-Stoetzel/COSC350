@@ -4,10 +4,8 @@
  Task 1
  task1.c
 
-	Take in 2 command line arguments.
-	Make 2 threads
-		1. One thread finds the sum from 1 - n
-		2. The other finds the product from 1 - n
+	When compiling, this error occurs:
+	warning: cast to 'void *' from smaller integer type 'int' [-Wint-to-void-pointer-cast]
 
  */
 
@@ -26,7 +24,7 @@ void *findSum(void *n)
 		nn += i;
 	}
 
-	printf("The sum of all numbers from 1 - n is %d \n", nn);
+	printf("∑n = %d \n", nn);
 	
 	pthread_exit(NULL);
 }
@@ -41,7 +39,7 @@ void *findProduct(void *n)
 		nn *= i;
 	}
 
-	printf("The product of all numbers from 1 - n is %d \n", nn);
+	printf("n! = %d \n", nn);
 	
 	pthread_exit(NULL);
 }
@@ -66,23 +64,20 @@ int main(int argc, char* argv[])
 	int n = myatoi(argv[1]);
 
 	rc = pthread_create(&sumThread, NULL, findSum, (void *) n);
-		if(rc)
+	if(rc)
 	{
-		puts("Error ocurred when creating pthreads");
+		puts("Error ocurred when creating pthread for addition.");
 		exit(-1);
 	}
 
 	rc = pthread_create(&prodThread, NULL, findProduct, (void *) n);
-	
 	if(rc)
 	{
-		puts("Error ocurred when creating pthreads");
+		puts("Error ocurred when creating pthread for multplication.");
 		exit(-1);
 	}
 
-	
 	pthread_exit(NULL);
-
 	
     return 0;
 }
