@@ -5,7 +5,8 @@
  task1.c
 
 	When compiling, this error occurs:
-	warning: cast to 'void *' from smaller integer type 'int' [-Wint-to-void-pointer-cast]
+	warning: cast to 'void *' from smaller integer type 'int' 
+	[-Wint-to-void-pointer-cast]
 
  */
 
@@ -16,32 +17,33 @@
 
 void *findSum(void *n)
 {
-	int nn = (int) n;
 	int i;
+	int nn = (int) n;
 
 	for(i = nn - 1; i > 0; i--)
 	{
 		nn += i;
 	}
-
-	printf("∑n = %d \n", nn);
 	
-	pthread_exit(NULL);
+	n = (void *) nn;
+
+	return n;
+
 }
 
 void *findProduct(void *n)
 {
-	int nn = (int) n;
 	int i;
-
+	int nn = (int) n;
+	
 	for(i = nn - 1; i > 0; i--)
 	{
 		nn *= i;
 	}
-
-	printf("n! = %d \n", nn);
 	
-	pthread_exit(NULL);
+	n = (void *) nn;
+	
+	return n;
 }
 
 int myatoi(char *str)
@@ -61,23 +63,27 @@ int main(int argc, char* argv[])
 {
 	pthread_t sumThread, prodThread;
 	int rc;
+	if(argc != 2)
+	{
+		puts("Invalid argument input. Only accepting one argument");
+		exit(1);
+	}
+	
 	int n = myatoi(argv[1]);
 
-	rc = pthread_create(&sumThread, NULL, findSum, (void *) n);
-	if(rc)
-	{
-		puts("Error ocurred when creating pthread for addition.");
-		exit(-1);
-	}
+	rc = pthread_create(&sumThread, NULL, findSum, (void*) n);
+	rc = pthread_create(&prodThread, NULL, findProduct, (void*) n);
 
-	rc = pthread_create(&prodThread, NULL, findProduct, (void *) n);
-	if(rc)
-	{
-		puts("Error ocurred when creating pthread for multplication.");
-		exit(-1);
-	}
+	void* sum;
+	void* prod;
+
+	pthread_join(sumThread, &sum);
+	pthread_join(prodThread, &prod);
+
+	printf("∑n = %d \n", (int) sum);
+	printf("n! = %d \n", (int) prod);
 
 	pthread_exit(NULL);
-	
-    return 0;
+    
+    exit(0);
 }
