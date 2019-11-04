@@ -16,30 +16,73 @@
 #include <unistd.h>
 #include <pthread.h>
 
-void *doMath(void *threadID){
-	int ID = (int) threadID;
-	printf("My thread ID is %d \n", ID);
-	if(ID == 0){
+void *findSum(void *n)
+{
+	int nn = (int) n;
+	int i;
 
+	for(i = nn - 1; i > 0; i--)
+	{
+		nn += i;
 	}
-	if(ID == 1){
 
-	}
+	printf("The sum of all numbers from 1 - n is %d \n", nn);
+	
 	pthread_exit(NULL);
+}
+
+void *findProduct(void *n)
+{
+	int nn = (int) n;
+	int i;
+
+	for(i = nn - 1; i > 0; i--)
+	{
+		nn *= i;
+	}
+
+	printf("The product of all numbers from 1 - n is %d \n", nn);
+	
+	pthread_exit(NULL);
+}
+
+int myatoi(char *str)
+{
+	int num = 0;
+	int index = 0;
+
+	while(str[index] != '\0')
+	{
+		num = (num * 10) + (str[index] - 48);
+		index++;
+	}
+	return num;
 }
 
 int main(int argc, char* argv[])
 {
-	pthread_t THREADS[2];
-	int currentThread, i;
-	int num = myatoi(argv[1]);
-	for(i = 0; i < 2; i++){
-		currentThread = pthread_create(&THREADS[i], NULL, doMath, (void *) i, num);
-		if(currentThread){
-			printf("Error! pthread_create returned the error code %d \n", currentThread);
-			exit(-1);
-		}
+	pthread_t sumThread, prodThread;
+	int rc;
+	int n = myatoi(argv[1]);
+
+	rc = pthread_create(&sumThread, NULL, findSum, (void *) n);
+		if(rc)
+	{
+		puts("Error ocurred when creating pthreads");
+		exit(-1);
 	}
+
+	rc = pthread_create(&prodThread, NULL, findProduct, (void *) n);
+	
+	if(rc)
+	{
+		puts("Error ocurred when creating pthreads");
+		exit(-1);
+	}
+
+	
 	pthread_exit(NULL);
+
+	
     return 0;
 }
