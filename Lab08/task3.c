@@ -26,13 +26,13 @@ int main()
 
 	if ( (pid= fork()) < 0)
 		err_sys("fork error");
-	else if (pid> 0)
+	else if (pid > 0)
 	{
 		close(fd[0]);
 		printf("submit two integers\n");
 		while( (size = read(STDIN_FILENO, sline, MAXLINE)) > 0)
 		{
-			write(fd[1], sline, size); /*write to a pipe */
+			write(fd[1], sline, size);
             waitpid(&pid);
 			printf("submit two integers\n");
 		}
