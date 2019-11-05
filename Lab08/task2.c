@@ -39,10 +39,10 @@ void readScores(int* scores)
 		{
 			valid = 0;
 		}
-	}	
+	}
 
 	i--;
-	
+
 	// Sorting the array with selection sort. Will be helpful later with median, min, and max
 	for(k = 0; k < i - 1; k++)
 	{
@@ -59,9 +59,7 @@ void readScores(int* scores)
 		scores[min] = temp;
 	}
 
-	void* send = (void*) scores;
-
-	pthread_exit(send);
+	pthread_exit(NULL);
 }
 
 void calcAvgMed(int* scores)
@@ -124,7 +122,7 @@ void calcMinMax(int* scores)
 void clearBuffer(int* scores)
 {
 	int i;
-	
+
 	puts("Clearing buffer with all 0's");
 	for(i = 0; i < 20; i++)
 	{
@@ -156,10 +154,7 @@ int main(int argc, char* argv[])
 		exit(-1);
 	}
 
-	void* recv;
-	pthread_join(THREAD[0], recv);
-
-	scores = (int*) scores;
+	pthread_join(THREAD[0], NULL);
 
 	rc = pthread_create(&THREAD[1], NULL, calcAvgMed, (void *) scores);
 	if(rc)
@@ -173,7 +168,7 @@ int main(int argc, char* argv[])
 	{
 		puts("Error ocurred when creating pthread for reading test scores.");
 		exit(-1);
-	}	
+	}
 
 	pthread_join(THREAD[1], NULL);
 	pthread_join(THREAD[2], NULL);
