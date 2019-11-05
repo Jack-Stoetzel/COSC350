@@ -68,7 +68,7 @@ int main(int argc, char* argv[])
 
 	if(argc != 2)
 	{
-		puts("Invalid argument input. Only accepting one argument");
+		puts("Invalid argument input. Only accepting one integer argument.");
 		exit(1);
 	}
 	
