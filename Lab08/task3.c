@@ -16,6 +16,7 @@
 int main()
 {
 	int n, size, num1, num2;
+	int status = 0;
 	int fd[2];
 	pid_t pid;
 	char sline[MAXLINE], rline[MAXLINE];
@@ -39,8 +40,6 @@ int main()
 		{
 			write(fd[1], sline, size);
 
-            waitpid(&pid);
-
 			puts("Enter two more integers.");
 		}
 	}
@@ -55,7 +54,7 @@ int main()
 				sprintf(rline, "The sum is %d\n", num1 + num2);
 
 				n = strlen(rline);
-				
+
 				if (write(STDOUT_FILENO, rline, n) != n){
 					puts("Writing error.");
 					exit(1);
@@ -63,7 +62,7 @@ int main()
 			}
 			else
 			{
-				if (write(STDOUT_FILENO, "invalid args\n", 13) != 13){
+				if (write(STDOUT_FILENO, "Invalid input. Must enter two integers.\n", 40) != 40){
 					puts("Writing error");
 					exit(1);
 				}
