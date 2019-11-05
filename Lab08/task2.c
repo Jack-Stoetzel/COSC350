@@ -17,7 +17,8 @@
 
 void readScores(int* scores)
 {
-	int i, score;
+	//int* tempScores = (int*) scores;
+	int i, score, k;
 	int valid = 1;
 
 	puts("You may enter up to 20 test scores, or enter -1 to quit early.");
@@ -26,13 +27,29 @@ void readScores(int* scores)
 	{
 		printf("Enter test score %d: ", i + 1);
 		scanf("%d", &score);
-		scores[i] = score;
-
-		if(scores[i] == -1)
+		while(score < -1)
+		{
+			puts("Invalid score input. Please input a positive score.");
+			scanf("%d", &score);
+		}
+		if(score > -1)
+		{
+			printf("New size = %d \n", (i + 2) * sizeof(int));
+			scores = realloc(scores, (i + 2) * sizeof(int));
+			scores[i] = score;
+			printf("Printing from 0 - %d \n", sizeof(scores) / sizeof(*scores));
+		
+		}
+		else
 		{
 			valid = 0;
 		}
 
+		for(k = 0; k < (sizeof(scores) / sizeof(int)); k++)
+		{
+			printf("%d ", scores[k]);
+		}
+		puts("");
 	}
 
 	pthread_exit(NULL);
@@ -64,11 +81,7 @@ int main(int argc, char* argv[])
 	pthread_t THREADS[4];
 	int rc, i;
 
-	int* scores = malloc(20 * sizeof(int));
-	for(i = 0; i < 20; i++)
-	{
-		scores[i] = -1;
-	}
+	int* scores = malloc(sizeof(int));
 
 	rc = pthread_create(&THREADS[0], NULL, readScores, scores);
 	if(rc)
@@ -77,7 +90,14 @@ int main(int argc, char* argv[])
 		exit(-1);
 	}
 
-	pthread_join(THREADS[0], NULL);
+	pthread_join(THREADS[0], scores);
+/*
+	for(i = 0; i < 20; i++)
+	{
+		printf("%d ", scores[i]);
+	}
+*/
+	/*
 
 	rc = pthread_create(&THREADS[1], NULL, calcAvgMed, scores);
 	if(rc)
@@ -85,6 +105,7 @@ int main(int argc, char* argv[])
 		puts("Error ocurred when creating pthread for reading test scores.");
 		exit(-1);
 	}
+	*/
 
 	pthread_exit(NULL);
 
