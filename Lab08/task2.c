@@ -3,13 +3,14 @@
  Lab 08
  Task 2
  task2.c
-	
+
 	1. Get test scores from the keyboard, up to 20, and saves them into the array.
 	2. Calculate an average score and Medium value and display.
 	3. Get the minimum and the maximum score and display.
 	4. Display results
  */
 
+#include <sys/types.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <unistd.h>
@@ -32,25 +33,22 @@ void readScores(int* scores)
 			puts("Invalid score input. Please input a positive score.");
 			scanf("%d", &score);
 		}
-		if(score > -1)
-		{
-			printf("New size = %d \n", (i + 2) * sizeof(int));
-			scores = realloc(scores, (i + 2) * sizeof(int));
-			scores[i] = score;
-			printf("Printing from 0 - %d \n", sizeof(scores) / sizeof(*scores));
-		
-		}
-		else
+
+		scores[i] = score;
+
+		if(score == -1)
 		{
 			valid = 0;
 		}
-
-		for(k = 0; k < (sizeof(scores) / sizeof(int)); k++)
-		{
-			printf("%d ", scores[k]);
-		}
-		puts("");
 	}
+	printf("Reallocating to %d \n", (i - 1) * sizeof(int));
+	scores = (int*) realloc(scores, i * sizeof(int));
+	printf("Printing %d \n", (sizeof(scores) / sizeof(int)));
+	for(k = 0; k < (sizeof(scores) / sizeof(int)); k++)
+	{
+		printf("%d ", scores[k]);
+	}
+	puts("");
 
 	pthread_exit(NULL);
 }
@@ -64,7 +62,7 @@ void calcAvgMed(int* scores)
 	{
 		total += scores[i];
 	}
-	
+
 	if(i == 0)
 	{
 		puts("The average and median are 0 becuase there were no scores entered.");
@@ -81,7 +79,7 @@ int main(int argc, char* argv[])
 	pthread_t THREADS[4];
 	int rc, i;
 
-	int* scores = malloc(sizeof(int));
+	int* scores = malloc(20 * sizeof(int));
 
 	rc = pthread_create(&THREADS[0], NULL, readScores, scores);
 	if(rc)
