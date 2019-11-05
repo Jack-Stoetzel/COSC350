@@ -16,6 +16,7 @@ int main(int argc, char* argv[])
     int i;
     int size = 0;
     char *cmd;
+
     for(i = 1; i < argc; i++)
     {
         size += strlen(argv[i]);
@@ -30,6 +31,7 @@ int main(int argc, char* argv[])
 
     char buf[BUFSIZ];
     FILE *ptr;
+   	
     if ((ptr = popen(cmd, "r")) != NULL)
     {
         while (fgets(buf, BUFSIZ, ptr) != NULL)

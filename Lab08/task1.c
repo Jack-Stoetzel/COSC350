@@ -8,6 +8,8 @@
 	warning: cast to 'void *' from smaller integer type 'int' 
 	[-Wint-to-void-pointer-cast]
 
+	pthread_create(pthread_t *thread, const pthread_attr_t *att, void *(*start_routine)(void*), void *arg);
+
  */
 
 #include <stdio.h>
@@ -63,6 +65,7 @@ int main(int argc, char* argv[])
 {
 	pthread_t sumThread, prodThread;
 	int rc;
+
 	if(argc != 2)
 	{
 		puts("Invalid argument input. Only accepting one argument");
@@ -71,12 +74,15 @@ int main(int argc, char* argv[])
 	
 	int n = myatoi(argv[1]);
 
+	// Makes a thread to find the sum of all numbers from 1 - n
 	rc = pthread_create(&sumThread, NULL, findSum, (void*) n);
 	if(rc)
 	{
 		puts("Error ocurred when creating pthread.");
 		exit(-1);
 	}
+
+	// Makes a thread to find the product of all numbers from 1 - n
 	rc = pthread_create(&prodThread, NULL, findProduct, (void*) n);
 		if(rc)
 	{

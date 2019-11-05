@@ -18,7 +18,6 @@
 
 void readScores(int* scores)
 {
-	//int* tempScores = (int*) scores;
 	int i, k, n, score;
 	int valid = 1;
 
@@ -44,6 +43,7 @@ void readScores(int* scores)
 
 	i--;
 	
+	// Sorting the array with selection sort. Will be helpful later with median, min, and max
 	for(k = 0; k < i - 1; k++)
 	{
 		int min = k;
@@ -143,6 +143,7 @@ int main(int argc, char* argv[])
 
 	int* scores = malloc(20 * sizeof(int));
 
+	// Setting every position to -1 will be used to determine valid array positions later
 	for(i = 0; i < 20; i++)
 	{
 		scores[i] = -1;
