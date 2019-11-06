@@ -16,7 +16,6 @@
 int main()
 {
 	int n, size, num1, num2;
-	int status = 0;
 	int fd[2];
 	pid_t pid;
 	char sline[MAXLINE], rline[MAXLINE];
