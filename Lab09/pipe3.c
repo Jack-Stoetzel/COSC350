@@ -32,14 +32,18 @@ int main()
     	
     	if(fork_result==0)
     	{
+    		char wBuffer[BUFSIZ +1];
         	sprintf(buffer, "%d", file_pipes[0]);
-       		(void)execl("pipe4","pipe4", buffer, (char*)0);
+        	sprintf(wBuffer, "%d", file_pipes[1]);
+        	sprintf()
+       		(void)execl("pipe4","pipe4", buffer, wBuffer, (char*)0);
     	    exit(EXIT_FAILURE);
     	}
     	else
     	{
-
         	data_processed=write(file_pipes[1],some_data, strlen(some_data));
+        	close(file_pipes[1]);
+        	wait(&fork_result);
         	printf("%d - wrote %d bytes\n", getpid(), data_processed);
     	}  
   	}
