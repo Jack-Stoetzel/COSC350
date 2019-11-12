@@ -11,12 +11,15 @@
 #include <stdio.h>
 #include <string.h>
 
+#define READ_END = 0;
+#define WRITE_END = 1;
+
 int main(int argc, char* argv[])
 {
     int file_pipes[2];
     int data_processed;
-    char buffer[BUFSIZ + 1];
     const char some_data[] = "123";
+    char* buffer = malloc(3 * sizeof(char));
 
     memset(buffer, '\0', sizeof(buffer));
 
