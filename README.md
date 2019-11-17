@@ -17,5 +17,4 @@ Basic concepts of Linux process and process attributes, process control using fo
 Basic concepts of inter-process communication using signals and pipes.
 ### Socket programming
 Basic concepts of socket communication, network information and multiple clients.
-### Perl programming
-Basic concepts of the Perl programming language and its general applications.
+
