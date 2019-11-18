@@ -12,7 +12,7 @@ This task is intended to help your understanding of how pipes work.
 		2. WRITE_END = 1
 	2. Dyanmically allocate buffer so it's exactly the right size for some_data.
 	3. Copy the string from some_data into buffer.
-	4. Modify the read so it's third argument is the exact size of buffer (rather than the large BUSIZ).
+	4. Modify the read so it's third argument is the exact size of buffer (rather than the large BUFSIZ).
 
 
 ## Task 2: Pipes Across a fork/exec
