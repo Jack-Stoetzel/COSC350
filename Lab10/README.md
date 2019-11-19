@@ -4,7 +4,7 @@
 
 Write two complete C programs "msgQsnd.c" and "msgQrcv.c" to communicate through the message queue.
 
-### msgQsnd.c:
+### msgQsnd.c
 
     * Create a message quese with rw-r--r--.
     To create a message queue, use existing file name "msgQsnd.c" for creating a key value.
