@@ -10,32 +10,33 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <fcntl.h>
 
+#define fifo_name "/tmp/task4_fifo"
 const int READ_END = 0;
 const int WRITE_END = 1;
 
 int main(int argc, char* argv[])
 {
-    int file_pipes[2];
+    int fifo, fd;
     int data_processed;
     const char some_data[] = "123";
     char* buffer = malloc(3 * sizeof(char));
 
     memset(buffer, '\0', 3);
 
-    if(pipe(file_pipes) == 0)
-    {
-        data_processed = write(file_pipes[WRITE_END], some_data, strlen(some_data));
+    fifo = mkfifo(fifo_name, 0777); 
 
-        printf("Wrote %d bytes. \n", data_processed);
+    fd = open(fifo_name, O_RDWR);
+    
+    data_processed = write(fd, some_data, strlen(some_data));
 
-        data_processed = read(file_pipes[READ_END], buffer, 3);
+    printf("Wrote %d bytes. \n", data_processed);
 
-        printf("Read %d bytes: %s \n", data_processed, buffer);
+    data_processed = read(fd, buffer, 3);
 
-        free(buffer);
-        exit(EXIT_SUCCESS);
-    }
+    printf("Read %d bytes: %s \n", data_processed, buffer);
+
     free(buffer);
-    exit(EXIT_FAILURE);
+    exit(EXIT_SUCCESS);
 }
