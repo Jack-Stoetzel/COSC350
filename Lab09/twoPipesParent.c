@@ -1,8 +1,8 @@
 /*
  Jack Stoetzel
  Lab 09
- Task 2
- pipe3.c
+ Task 3
+ twoPipesParent.c
 
  */
 
@@ -15,13 +15,14 @@ int main()
 {
     int data_processed;
     int file_pipes[2];
+    int pipe2[2];
     const char some_data[] = "123";
     char buffer[BUFSIZ + 1];
     pid_t fork_result;
 
     memset(buffer, '\0' ,sizeof(buffer));
 
-    if(pipe(file_pipes) == 0)
+    if(pipe(file_pipes) == 0 && pipe(pipe2) == 0)
     {
         fork_result = fork();
     	if(fork_result == -1)
@@ -32,6 +33,7 @@ int main()
     	
     	if(fork_result==0)
     	{
+            // Send both file descriptors to the child and the message "Hi there, Kiddo"
     		char wBuffer[BUFSIZ + 1];
         	sprintf(buffer, "%d", file_pipes[0]);
         	sprintf(wBuffer, "%d", file_pipes[1]);
@@ -40,6 +42,7 @@ int main()
     	}
     	else
     	{
+            // Read and print the message from the child
         	data_processed=write(file_pipes[1], some_data, strlen(some_data));
         	close(file_pipes[1]);
         	wait(&fork_result);

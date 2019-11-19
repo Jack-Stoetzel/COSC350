@@ -1,8 +1,8 @@
 /*
  Jack Stoetzel
  Lab 09
- Task 2
- pipe4.c
+ Task 3
+ twoPipesChild.c
 
  */
 
