@@ -1,8 +1,8 @@
 /*
  Jack Stoetzel
  Lab 09
- Task 1
- pipe1.c
+ Task 4
+ pipeFifo.c
 
  */
 
@@ -25,10 +25,10 @@ int main(int argc, char* argv[])
 
     memset(buffer, '\0', 3);
 
-    fifo = mkfifo(fifo_name, 0777); 
+    fifo = mkfifo(fifo_name, 0777);
 
     fd = open(fifo_name, O_RDWR);
-    
+
     data_processed = write(fd, some_data, strlen(some_data));
 
     printf("Wrote %d bytes. \n", data_processed);
