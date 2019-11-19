@@ -8,3 +8,6 @@ all:
 
 clean:
 	rm pipe1 pipe3 pipe4 twoPipesChild twoPipesParent pipeFifo
+
+clearscreen:
+	clear
