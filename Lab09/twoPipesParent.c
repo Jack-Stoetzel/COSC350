@@ -18,11 +18,9 @@ int main()
     int pipe2[2];
     const char some_data[] = "Hi there, Kiddo";
     char buffer[BUFSIZ + 1];
-    char buffer2[BUFSIZ + 1];
     pid_t fork_result;
 
     memset(buffer, '\0', sizeof(buffer));
-    memset(buffer, '\0', sizeof(buffer2));
 
     if(pipe(file_pipes) == 0 && pipe(pipe2) == 0)
     {
@@ -32,13 +30,17 @@ int main()
         	fprintf(stderr, "Fork Failure");
         	exit(EXIT_FAILURE);
     	}
-    	
+
     	if(fork_result==0)
     	{
             // Send both file descriptors to the child and the message "Hi there, Kiddo"
+            char rBuffer[BUFSIZ + 1];
+            char wBuffer[BUFSIZ + 1];
             close(file_pipes[1]);
             close(pipe2[0]);
-       		(void)execl("twoPipesChild", "twoPipesChild", file_pipes, pipe2, (char*)0);
+            sprintf(rBuffer, "%d", file_pipes[0]);
+            sprintf(wBuffer, "%d", pipe2[1]);
+       		(void)execl("twoPipesChild", "twoPipesChild", rBuffer, wBuffer, (char*)0);
     	    exit(EXIT_FAILURE);
     	}
     	else
@@ -48,17 +50,10 @@ int main()
             close(pipe2[1]);
         	data_processed=write(file_pipes[1], some_data, strlen(some_data));
             data2 = read(pipe2[0], buffer, 6);
-        	wait(&fork_result);
             printf("Parent (%d) sent %d bytes to the child. \n", getpid(), 15);
+        	wait(&fork_result);
         	printf("Parent (%d) recieved the message \" %s \" made of %d bytes. \n", getpid(), buffer, data2);
-    	}  
+    	}
   	}
     exit(EXIT_SUCCESS);
 }
-
-
-
-
-
-
-
