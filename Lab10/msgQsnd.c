@@ -14,23 +14,12 @@
 #include <sys/ipc.h>
 #include <sys/sem.h>
 
-typedef struct MSGBUF{
+typedef struct MSGBUF
+{
     long type;
     int one;
     int two;
 }MsgBuf;
-
-int myatoi(char *str)
-{
-	int num = 0;
-	int index = 0;
-	while(str[index] != '\0' && str[index] != '\n')
-	{
-		num = (num * 10) + (str[index] - 48);
-		index++;
-	}
-	return num;
-}
 
 int main(int argc, char* argv[])
 {
@@ -55,11 +44,18 @@ int main(int argc, char* argv[])
     char* input = (char*) calloc(256, sizeof(int));
 
     puts("Enter two inerger values...");
-    while(fgets(input, 256, stdin), !feof(stdin)) {
-        sprintf(input, "%d%d", buf.one, buf.two);
-        if (msgsnd(Qid, (MsgBuf *) &buf, sizeof(buf), 0) == -1){
+
+    // Reading in data from the user
+    while(fgets(input, 256, stdin), !feof(stdin))
+    {
+        // Converting the string to two ints
+        sscanf(input, "%d%d", &buf.one, &buf.two);
+        // Sending the struct with the two ints to the message queue
+        if (msgsnd(Qid, (MsgBuf *) &buf,  2 * sizeof(int), 0) == -1)
+        {
             perror("msgsnd() error");
         }
+        puts("Enter two inerger values...");
     }
 
     // Removing the message queue
