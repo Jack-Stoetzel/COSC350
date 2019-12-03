@@ -16,9 +16,9 @@
 
 #define N 10
 typedef int semaphore;
-semaphore mutex = 1;
-semaphore empty = N;
-semaphore full = 0;
+semaphore mutex = 0;
+semaphore empty = 2;
+semaphore full = 1;
 
 int semid;
 int list[10];
@@ -32,32 +32,28 @@ typedef union SEMUN {
 
 void insert_item(int item)
 {
-    if(curr < 10)
-    {
-        list[curr] = item;
-        curr++;
-    }
-    else{
-        printf("list is full\n");
-    }
+	if(curr < 10)
+		list[curr++] = item;
+	else
+		printf("list is full\n");
 }
 int remove_item()
 {
-    int i = -1;
-    if(curr >= 0)
-    {
-        i = list[--curr];
-        list[curr] = 0;
-        return i;
-    }
-    else
-        printf("list is empty\n");
+	int i = -1;
+	if(curr >= 0)
+	{
+		i = list[--curr];
+		list[curr] = 0;
+		return i;
+	}
+	else
+		printf("list is empty\n");
 }
 
 void up(int sem_num)
 {
-    struct sembuf up = {sem_num, 1, 0};
-    if(semop(semid, &up, 1) == -1)
+	struct sembuf up = {sem_num, 1, 0};
+	if(semop(semid, &up, 1) == -1)
     {
         perror("semop() error");
         exit(1);
@@ -66,46 +62,62 @@ void up(int sem_num)
 
 void down(int sem_num)
 {
-    struct sembuf down = {sem_num, -1, 0};
-    if(semop(semid, &down, 1) == -1)
+	struct sembuf down = {sem_num, -1, 0};
+	if(semop(semid, &down, 1) == -1)
     {
         perror("semop() error");
         exit(1);
     }
 }
 
-void producer()
+pthread_t thread_id[2];
+void* producer()
 {
-    int item;
-    while(1)
-    {
-        //item = producer_item();
-        down(empty);
-        down(mutex);
-        insert_item(item);
-        up(mutex);
-        up(full);
+	int item;
+	while(1)
+	{
+		item = rand() % 9 + 1;
+		down(empty);
+		down(mutex);
+		printf("Producing %d\n", item);
+		insert_item(item);
+		up(mutex);
+		up(full);
+		int i;
+		for(i = 0; i < 10; i++)
+        {
+			printf("%d ", list[i]);
+        }
+		puts("");
+		sleep(1);
     }
 }
 
-void consumer()
+void* consumer()
 {
-    int item;
-    while(1)
-    {
-        down(full);
-        down(mutex);
-        item = remove_item();
-        up(mutex);
-        up(empty);
-        //consume_item(item);
-    }
+	int item;
+	while(1)
+	{
+		item = rand() % 10;
+		down(full);
+		down(mutex);
+		item = remove_item();
+		up(mutex);
+		up(empty);
+		printf("Consuming %d\n", item);
+		int i;
+		for(i = 0; i < 10; i++)
+        {
+			printf("%d ", list[i]);
+        }
+		puts("");
+		sleep(2);
+	}
 }
-
-
 
 int main(int argc, char* argv[])
 {
+
     // Sets key value to 'msgQsnd.c'
     key_t key;
     if((key = ftok("task3.c", 'B')) == -1)
@@ -126,19 +138,19 @@ int main(int argc, char* argv[])
     arg.val = 1;
     if(semctl(semid, mutex, SETVAL, arg) == -1)
     {
-        perror("semctl() error");
-        exit(1);
-    }
-    arg.val = N;
-    if(semctl(semid, empty, SETVAL, arg) == -1)
-    {
-        perror("semctl() error");
+        perror("semctl(mutex) error");
         exit(1);
     }
     arg.val = 0;
     if(semctl(semid, full, SETVAL, arg) == -1)
     {
-        perror("semctl() error");
+        perror("semctl(full) error");
+        exit(1);
+    }
+    arg.val = 10;
+    if(semctl(semid, empty, SETVAL, arg) == -1)
+    {
+        perror("semctl(empty) error");
         exit(1);
     }
 
