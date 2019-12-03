@@ -43,7 +43,7 @@ int remove_item()
 {
 	if(curr >= 0)
 	{
-        int temp = list[curr];
+        int temp = list[curr -1];
 		curr--;
 		list[curr] = 0;
 		return temp;
@@ -72,7 +72,6 @@ void down(int sem_num)
     }
 }
 
-pthread_t thread_id[2];
 void* producer()
 {
 	int item;
@@ -100,7 +99,6 @@ void* consumer()
 	int item;
 	while(1)
 	{
-		item = rand() % 10;
 		down(full);
 		down(mutex);
 		item = remove_item();
