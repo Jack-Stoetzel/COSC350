@@ -23,36 +23,12 @@ semaphore full = 0;
 int semid;
 int list[10];
 int curr = 0;
-pthread_t thread_id[2];
 
-
-void producer()
-{
-    int item;
-    while(1)
-    {
-        item = producer_item();
-        down(&empty);
-        down(&mutex);
-        insert_item(item);
-        up(&mutex);
-        up(&full);
-    }
-}
-
-void consumer()
-{
-    int item;
-    while(1)
-    {
-        down(&full);
-        down(&mutex);
-        item = remove_item();
-        up(&mutex);
-        up(&empty);
-        consume_item(item);
-    }
-}
+typedef union SEMUN {
+    int val;
+    struct semid_ds *buf;
+    unsigned short *array;
+}Semun;
 
 void insert_item(int item)
 {
@@ -81,7 +57,7 @@ int remove_item()
 void up(int sem_num)
 {
     struct sembuf up = {sem_num, 1, 0};
-    if(semop(semid, &up, 1) == -1) 
+    if(semop(semid, &up, 1) == -1)
     {
         perror("semop() error");
         exit(1);
@@ -98,50 +74,87 @@ void down(int sem_num)
     }
 }
 
+void producer()
+{
+    int item;
+    while(1)
+    {
+        //item = producer_item();
+        down(empty);
+        down(mutex);
+        insert_item(item);
+        up(mutex);
+        up(full);
+    }
+}
+
+void consumer()
+{
+    int item;
+    while(1)
+    {
+        down(full);
+        down(mutex);
+        item = remove_item();
+        up(mutex);
+        up(empty);
+        //consume_item(item);
+    }
+}
+
+
+
 int main(int argc, char* argv[])
 {
-
+    // Sets key value to 'msgQsnd.c'
     key_t key;
-    struct senum arg;
     if((key = ftok("task3.c", 'B')) == -1)
     {
         perror("ftok() error.");
         exit(1);
     }
-/* create a semaphore set with 1 semaphore: */
 
-    if((semid = semget(key, 3, 0644 | IPC_CREAT)) == -1)
+    // Creates three semaphores with the key and the privileges rw-rw-rw-
+    if((semid = semget(key, 3, 0666 | IPC_CREAT)) == -1)
     {
-        perror("semget Error");
+        perror("semget() error");
         exit(1);
     }
 
-    //initialize all of the semaphores
-    arg.val = 0;
-    if(semctl(semid, full, SETVAL, arg) == -1)
-    {
-        perror("semctl Error");
-        exit(1);
-    }
-    arg.val = 10;
-    if(semctl(semid, empty, SETVAL, arg) == -1)
-    {
-        perror("semctl Error");
-        exit(1);
-    }
+    // Sets the values of the semaphores to 0, 1, and N (10)
+    Semun arg;
     arg.val = 1;
     if(semctl(semid, mutex, SETVAL, arg) == -1)
     {
-        perror("semctl Error");
+        perror("semctl() error");
+        exit(1);
+    }
+    arg.val = N;
+    if(semctl(semid, empty, SETVAL, arg) == -1)
+    {
+        perror("semctl() error");
+        exit(1);
+    }
+    arg.val = 0;
+    if(semctl(semid, full, SETVAL, arg) == -1)
+    {
+        perror("semctl() error");
         exit(1);
     }
 
-    printf("Starting threads\n");
-    pthread_create(&thread_id[0], NULL, producer, (void*)&semid);
-    pthread_create(&thread_id[1], NULL, consumer, (void*)&semid);
+    // Creates threads for the consumer and the producer
+    pthread_t thread_ID[2];
+    pthread_create(&thread_ID[0], NULL, producer, (void*)&semid);
+    pthread_create(&thread_ID[1], NULL, consumer, (void*)&semid);
 
-    pthread_join(thread_id[0], NULL);
-    pthread_join(thread_id[1], NULL);
+    pthread_join(thread_ID[0], NULL);
+    pthread_join(thread_ID[1], NULL);
 
+
+    // Removes the semaphores
+    if (semctl(semid, 0, IPC_RMID, arg) == -1) {
+        perror("semctl() Error");
+        exit(1);
+    }
     return 0;
 }
