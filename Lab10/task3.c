@@ -32,22 +32,24 @@ typedef union SEMUN {
 
 void insert_item(int item)
 {
-	if(curr < 10)
+	if(curr < 10){
 		list[curr++] = item;
-	else
-		printf("list is full\n");
+    }
+	else{
+		printf("No space to insert. \n");
+    }
 }
 int remove_item()
 {
-	int i = -1;
 	if(curr >= 0)
 	{
-		i = list[--curr];
+        int temp = list[curr];
+		curr--;
 		list[curr] = 0;
-		return i;
+		return temp;
 	}
 	else
-		printf("list is empty\n");
+		printf("No value to remove\n");
 }
 
 void up(int sem_num)
