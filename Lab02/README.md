@@ -1,4 +1,4 @@
-# Lab #2
+# Lab 02
 ## Task #6:
 Write a shell script using for loop to print the following
 patterns on the screen:
