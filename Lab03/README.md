@@ -1,4 +1,4 @@
-# Lab #3
+# Lab 03
 
 ## Task #1
 Write a c code to copy a content of any readable file (**foo**) to a file (**clone**) without open input file (use standard input and output (file descriptor 1 or 0) with input output redirection).
