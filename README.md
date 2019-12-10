@@ -1,7 +1,7 @@
 # COSC350
 Systems Software
 
-Taken in the fall semester of 2019 with Dr. Sang-Eon Park.
+Taken in fall 2019 with Dr. Sang-Eon Park at Salisbury University.
 
 ## Topics Discussed
 
