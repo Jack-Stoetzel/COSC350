@@ -1,3 +1,5 @@
+### Jack Stoetzel
+
 # Lab 06
 
 ## Task 1: getenv() Function

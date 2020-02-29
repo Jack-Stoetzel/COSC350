@@ -1,5 +1,9 @@
+### Jack Stoetzel
+
 # Lab 02
-## Task #6:
+
+## Task 6
+
 Write a shell script using for loop to print the following
 patterns on the screen:
 
@@ -38,11 +42,13 @@ c. Your program asks a number between 5 to 9. If an input is not
     9 9 9 9 9 9 9 9 9
 
 
-## Task #7:
+## Task 7
+
 Write a script named task7.sh to calculating factorial of given number by using while loop. The shell accepts one integer argument as a parameter and calculates factorial and display the result.
 
-## Task #8:
-Write a script named "task8.sh" to print given numbers sum of of all digit. The shell accepts one integer argument as a parameter. Your program must check number of arguments is one. If number of argument is not one, your program must display error message and exit.
+## Task 8
+
+Write a script named "task8.sh" to print given numbers sum of all digit. The shell accepts one integer argument as a parameter. Your program must check number of arguments is one. If the number of arguments is not one, your program must display error message and exit.
 
 Ex.)
     
@@ -52,7 +58,8 @@ Ex.)
     [separk@sejong] ./sumdigit.sh
     You need to pass one numerical argument
 
-## Task #9:
+## Task 9
+
 Write a bash script that searches a word in a file as follows:
 1. Ask user for a directory in which to find the file
     * If not a valid directory, quit with an appropriate error message

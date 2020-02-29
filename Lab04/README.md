@@ -1,7 +1,8 @@
+### Jack Stoetzel
+
 # Lab 04
 
-
-## Task #1
+## Task 1
 
 Write a C main function that takes one command-line argument, the name of an input file. The input file contains exactly one integer spread out over a single line of up to 80 characters. For example, the integer 3579 is embedded in the line az3mqrm5t?7!z9v. 
 
@@ -12,23 +13,24 @@ Your program uses system calls to do the following:
   4. Convert the sum back to a string (using function convIntToStr)
   5. Make a system call to write the string to standard output
   
-    /****************************************************
-        Convert integer to string
-        Params: x is the int to be converted
-                str is the string into which to write
-        Returns: length of the string
-    *****************************************************/
+  ```` C
+  /****************************************************
+      Convert integer to string
+      Params: x is the int to be converted
+              str is the string into which to write
+      Returns: length of the string
+  *****************************************************/
+  
+  int convIntToStr(char * str, int x)
+  {
+      sprintf(str, "%d", x);
+      return (strlen(str));
+  }
     
-    int convIntToStr(char * str, int x)
-    {
-        sprintf(str, "%d", x);
-        return (strlen(str));
-    }
-    
-
-    /* Returns a non-zero value if character c is a digit, zero otherwise. */
+  /* Returns a non-zero value if character c is a digit, zero otherwise. */
    
-    int isdigit(int c)
+  int isdigit(int c)
+  ````
 
 You need to include five header files, <unistd.h>, <fcntl.h>, <ctype.h>, <stdio.h>, <string.h> for read write open system calls and sprint return strlen library functions.
 
@@ -50,7 +52,7 @@ Write a C program for sequence of following tasks:
   
   2. By using system calls, copy hello file under ~/Dir2/Dir12/
   3. By using system calls, make a symbolic link named toDir12 to directory toDir12
-  4. By using system calls, make a symbolic link named toHello to executable file ~/Dir12/hello
+  4. By using system calls, make a symbolic link named toHello to executable file \~/Dir12/hello
   
   ![Pic 2](./tree_W_hello.png)
    

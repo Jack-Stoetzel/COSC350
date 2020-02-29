@@ -1,4 +1,6 @@
-# Lab 09
+### Jack Stoetzel
+
+# Lab 10
 
 ## Task 1: A Simple Pipe
 
@@ -29,7 +31,7 @@ This task is intended to help your understanding of how pipes work.
 ## Task 3: Multiple Pipes Across a fork/exec
 
 In this task, you will write a program that has two-way communication between parent and child. 
-Use task 2 as a starting point, and add a second pipe to it.
+Use task 2 as a starting point and add a second pipe to it.
 
 1. Copy pipe3.c to twoPipesParent.c.
 2. Copy pipe4.c to twoPipesChild.c.
@@ -39,14 +41,14 @@ Use task 2 as a starting point, and add a second pipe to it.
 	3. Pass both pipes' files descriptors to the child in the exec.
 	4. Send the message "Hi there, Kiddo" to the child over one pipe (as in Task 2). 
 	Print the pid and byte count as in Task 2.
-	5. Then, read a messgae from the child over the second pipe. 
+	5. Then, read a message from the child over the second pipe. 
 	Print the pid, byte count, and message text as in Task 2. 
 4. Modify twoPipesChild.c as follows:
 	1. Grab the file descriptor of both pipes from the argument list.
 	2. Close the appropriate file descriptor.
 	3. Read a message from the parent over the first pipe (as in Task 2).
 	Print the pid, byte count, and message text as in Task 2. 
-	4. Send the message "Hi Mom" to the parent over the sewcond pipe. 
+	4. Send the message "Hi Mom" to the parent over the second pipe. 
 	Print the pid and byte count as in Task 2.
 
 ## Task 4: FIFOs
